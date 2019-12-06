@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yss.demo_ticket.mapper.GradeMapper">
+    <!--  将查询返回的结果映射到一个结果集当中。-->
+    <resultMap id="BaseResultMap" type="com.yss.demo_model.Grade">
+        <id column="_id" property="id" jdbcType="VARCHAR"/>
+        <result column="subject" property="subject" jdbcType="VARCHAR"/>
+        <result column="score" property="score" jdbcType="TINYINT"/>
+        <result column="student_id" property="studentId" jdbcType="VARCHAR"/>
+
+        <association property="student" javaType="com.yss.demo_model.Student">
+            <id property="id" column="_id" />
+
+            <result property="name" column="name" />
+
+            <result property="age" column="age" />
+        </association>
+    </resultMap>
+
+    <!--一对一查询练习-->
+    <select id="queryGradeByStudentId" resultMap="BaseResultMap" parameterType="string">
+        select
+          *
+        from
+          grade_detail g
+        left join
+          student_detail s
+            on g.student_id=s._id
+        where
+          1=1
+        <if test="studentId != null">
+           and  g.student_id=#{studentId}
+        </if>
+    </select>
+
+</mapper>

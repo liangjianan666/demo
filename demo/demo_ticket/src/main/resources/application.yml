@@ -1,0 +1,50 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: demo-ticket
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true
+  data:
+    rest:
+      default-page-size:
+#数据源
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/student?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#打印sql语句
+logging:
+  level:
+    com.yss.demo_ticket.mapper: debug
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration:
+    cache-enabled: true   #使全局的映射器启用或禁用缓存
+    lazy-loading-enabled: false  #全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时
+    aggressive-lazy-loading: false   #当启用时，有延迟加载属性的对象在被调用时将会完全加载任意属性。否则，每种属性将会按需要加载
+    multiple-result-sets-enabled: true     #是否允许单条sql 返回多个数据集  (取决于驱动的兼容性)
+    use-column-label: true
+    use-generated-keys: true
+    auto-mapping-behavior: partial                      #指定 MyBatis 如何自动映射 数据基表的列 NONE：不映射　PARTIAL:部分  FULL:全部
+    default-executor-type: simple
+    map-underscore-to-camel-case: true
+    local-cache-scope: session
+
+
+
